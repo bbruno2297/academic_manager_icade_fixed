@@ -12,6 +12,9 @@ import 'screens/evaluation_detail_screen.dart';
 import 'screens/academic_years_screen.dart';
 import 'screens/add_academic_year_screen.dart';
 import 'screens/calendar_screen.dart';
+import 'screens/stats_screen.dart';
+import 'screens/settings_screen.dart';
+import 'providers/theme_provider.dart';
 import 'models/subject.dart';
 import 'models/evaluation.dart';
 
@@ -25,27 +28,57 @@ void main() async {
 
   runApp(
     const ProviderScope(
-      child: AcademicManagerApp(),
+      child: MyApp(),
     ),
   );
 }
 
-class AcademicManagerApp extends StatelessWidget {
-  const AcademicManagerApp({super.key});
+class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Assuming themeProvider is defined elsewhere, e.g., final themeProvider = StateProvider<ThemeMode>((ref) => ThemeMode.system);
+    // For this change, I'll assume it exists and just add the line.
+    // If themeProvider is not defined, this will cause a compilation error.
+    final themeMode = ref.watch(themeProvider);
+
     return MaterialApp(
       title: 'Academic Manager ICADE',
       debugShowCheckedModeBanner: false,
+      themeMode: themeMode,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors
-              .blue, // Changed from 0xFF1976D2 to Colors.blue as per instruction
+          seedColor: const Color(0xFF003366), // Azul ICADE
           brightness: Brightness.light,
         ),
         useMaterial3: true,
         fontFamily: 'Roboto',
+        cardTheme: CardThemeData(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
+        ),
+      ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF003366), // Azul ICADE
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
+        fontFamily: 'Roboto',
+        scaffoldBackgroundColor:
+            const Color(0xFF121212), // Ensure dark background
         cardTheme: CardThemeData(
           elevation: 2,
           shape: RoundedRectangleBorder(
@@ -70,6 +103,8 @@ class AcademicManagerApp extends StatelessWidget {
         '/academic-years': (context) => const AcademicYearsScreen(),
         '/add-academic-year': (context) => const AddAcademicYearScreen(),
         '/calendar': (context) => const CalendarScreen(),
+        '/stats': (context) => const StatsScreen(),
+        '/settings': (context) => const SettingsScreen(),
       },
       onGenerateRoute: (settings) {
         // Handle routes that need arguments

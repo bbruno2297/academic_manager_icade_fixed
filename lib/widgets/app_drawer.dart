@@ -82,75 +82,15 @@ class AppDrawer extends StatelessWidget {
             },
           ),
 
-          // Estadísticas
-          ListTile(
-            leading: const Icon(Icons.bar_chart),
-            title: const Text('Estadísticas'),
-            trailing: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.orange.shade100,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                'Phase 2',
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.orange.shade700,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Estadísticas - Disponible en Phase 2'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
-            },
-          ),
-
-          // Años Académicos
-          ListTile(
-            leading: const Icon(Icons.calendar_month),
-            title: const Text('Años Académicos'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, '/academic-years');
-            },
-          ),
-
           const Divider(),
 
           // Configuración
           ListTile(
             leading: const Icon(Icons.settings),
             title: const Text('Configuración'),
-            trailing: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade100,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                'Phase 3',
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.blue.shade700,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
             onTap: () {
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Configuración - Disponible en Phase 3'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
+              Navigator.pushNamed(context, '/settings');
             },
           ),
 
