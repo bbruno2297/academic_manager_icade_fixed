@@ -29,7 +29,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   List<Evaluation> _getEvaluationsForDay(
       DateTime day, List<Evaluation> evaluations) {
     return evaluations.where((evaluation) {
-      return isSameDay(evaluation.date, day);
+      return isSameDay(evaluation.fecha, day);
     }).toList();
   }
 
@@ -101,7 +101,10 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   shape: BoxShape.circle,
                 ),
                 todayDecoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withValues(alpha: 0.5),
                   shape: BoxShape.circle,
                 ),
                 selectedDecoration: BoxDecoration(
@@ -125,7 +128,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 10,
                       offset: const Offset(0, -5),
                     ),
@@ -157,7 +160,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.1),
+                                  .withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
