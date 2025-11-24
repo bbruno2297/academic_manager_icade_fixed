@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'screens/home_screen.dart';
 import 'services/isar_service.dart';
+import 'screens/home_screen.dart';
+import 'screens/subjects_management_screen.dart';
+import 'screens/add_subject_screen.dart';
+import 'screens/edit_subject_screen.dart';
+import 'screens/subject_detail_screen.dart';
+import 'screens/add_evaluation_screen.dart';
+import 'screens/evaluation_detail_screen.dart';
+import 'models/subject.dart';
+import 'models/evaluation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +36,8 @@ class AcademicManagerApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF1976D2),
+          seedColor: Colors
+              .blue, // Changed from 0xFF1976D2 to Colors.blue as per instruction
           brightness: Brightness.light,
         ),
         useMaterial3: true,
@@ -49,7 +58,44 @@ class AcademicManagerApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/subjects': (context) => const SubjectsManagementScreen(),
+        '/add-subject': (context) => const AddSubjectScreen(),
+      },
+      onGenerateRoute: (settings) {
+        // Handle routes that need arguments
+        if (settings.name == '/edit-subject') {
+          final subject = settings.arguments as Subject;
+          return MaterialPageRoute(
+            builder: (context) => EditSubjectScreen(subject: subject),
+          );
+        }
+        if (settings.name == '/subject-detail') {
+          final subject = settings.arguments as Subject;
+          return MaterialPageRoute(
+            builder: (context) => SubjectDetailScreen(subject: subject),
+          );
+        }
+        if (settings.name == '/add-evaluation') {
+          final int? subjectId = settings.arguments as int?;
+          return MaterialPageRoute(
+            builder: (context) =>
+                AddEvaluationScreen(preselectedSubjectId: subjectId),
+          );
+        }
+        if (settings.name == '/evaluation-detail') {
+          final args = settings.arguments as Map<String, dynamic>;
+          return MaterialPageRoute(
+            builder: (context) => EvaluationDetailScreen(
+              evaluation: args['evaluation'] as Evaluation,
+              subject: args['subject'] as Subject,
+            ),
+          );
+        }
+        return null;
+      },
     );
   }
 }

@@ -4,6 +4,7 @@ import '../providers/subject_providers.dart';
 import '../widgets/marcador_widget.dart';
 import '../widgets/agenda_widget.dart';
 import '../widgets/gestion_notas_widget.dart';
+import '../widgets/app_drawer.dart';
 import 'add_subject_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -20,6 +21,7 @@ class HomeScreen extends ConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
+      drawer: const AppDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
