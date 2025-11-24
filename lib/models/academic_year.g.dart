@@ -46,6 +46,11 @@ const AcademicYearSchema = CollectionSchema(
       id: 5,
       name: r'nombre',
       type: IsarType.string,
+    ),
+    r'updatedAt': PropertySchema(
+      id: 6,
+      name: r'updatedAt',
+      type: IsarType.dateTime,
     )
   },
   estimateSize: _academicYearEstimateSize,
@@ -111,6 +116,7 @@ void _academicYearSerialize(
   writer.writeDateTime(offsets[3], object.fechaInicio);
   writer.writeBool(offsets[4], object.isCurrentYear);
   writer.writeString(offsets[5], object.nombre);
+  writer.writeDateTime(offsets[6], object.updatedAt);
 }
 
 AcademicYear _academicYearDeserialize(
@@ -127,6 +133,7 @@ AcademicYear _academicYearDeserialize(
   object.id = id;
   object.isCurrentYear = reader.readBool(offsets[4]);
   object.nombre = reader.readString(offsets[5]);
+  object.updatedAt = reader.readDateTime(offsets[6]);
   return object;
 }
 
@@ -149,6 +156,8 @@ P _academicYearDeserializeProp<P>(
       return (reader.readBool(offset)) as P;
     case 5:
       return (reader.readString(offset)) as P;
+    case 6:
+      return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -823,6 +832,62 @@ extension AcademicYearQueryFilter
       ));
     });
   }
+
+  QueryBuilder<AcademicYear, AcademicYear, QAfterFilterCondition>
+      updatedAtEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'updatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AcademicYear, AcademicYear, QAfterFilterCondition>
+      updatedAtGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'updatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AcademicYear, AcademicYear, QAfterFilterCondition>
+      updatedAtLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'updatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AcademicYear, AcademicYear, QAfterFilterCondition>
+      updatedAtBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'updatedAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension AcademicYearQueryObject
@@ -905,6 +970,18 @@ extension AcademicYearQuerySortBy
   QueryBuilder<AcademicYear, AcademicYear, QAfterSortBy> sortByNombreDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nombre', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AcademicYear, AcademicYear, QAfterSortBy> sortByUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AcademicYear, AcademicYear, QAfterSortBy> sortByUpdatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 }
@@ -997,6 +1074,18 @@ extension AcademicYearQuerySortThenBy
       return query.addSortBy(r'nombre', Sort.desc);
     });
   }
+
+  QueryBuilder<AcademicYear, AcademicYear, QAfterSortBy> thenByUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AcademicYear, AcademicYear, QAfterSortBy> thenByUpdatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.desc);
+    });
+  }
 }
 
 extension AcademicYearQueryWhereDistinct
@@ -1036,6 +1125,12 @@ extension AcademicYearQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'nombre', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<AcademicYear, AcademicYear, QDistinct> distinctByUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'updatedAt');
     });
   }
 }
@@ -1081,6 +1176,12 @@ extension AcademicYearQueryProperty
   QueryBuilder<AcademicYear, String, QQueryOperations> nombreProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'nombre');
+    });
+  }
+
+  QueryBuilder<AcademicYear, DateTime, QQueryOperations> updatedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'updatedAt');
     });
   }
 }

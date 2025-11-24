@@ -136,30 +136,9 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.calendar_month),
             title: const Text('Años Académicos'),
-            trailing: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.orange.shade100,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                'Phase 2',
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.orange.shade700,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
             onTap: () {
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                      'Gestión de Años Académicos - Disponible en Phase 2'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
+              Navigator.pushNamed(context, '/academic-years');
             },
           ),
 

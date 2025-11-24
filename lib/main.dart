@@ -8,6 +8,8 @@ import 'screens/edit_subject_screen.dart';
 import 'screens/subject_detail_screen.dart';
 import 'screens/add_evaluation_screen.dart';
 import 'screens/evaluation_detail_screen.dart';
+import 'screens/academic_years_screen.dart';
+import 'screens/add_academic_year_screen.dart';
 import 'models/subject.dart';
 import 'models/evaluation.dart';
 
@@ -63,6 +65,8 @@ class AcademicManagerApp extends StatelessWidget {
         '/': (context) => const HomeScreen(),
         '/subjects': (context) => const SubjectsManagementScreen(),
         '/add-subject': (context) => const AddSubjectScreen(),
+        '/academic-years': (context) => const AcademicYearsScreen(),
+        '/add-academic-year': (context) => const AddAcademicYearScreen(),
       },
       onGenerateRoute: (settings) {
         // Handle routes that need arguments

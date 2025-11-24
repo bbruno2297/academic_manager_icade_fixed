@@ -26,7 +26,7 @@ class AcademicYearRepository {
     return null;
   }
 
-  Future<void> setCurrentYear(int yearId) async {
+  Future<void> setAsCurrent(int yearId) async {
     final isar = await _getIsar();
     final allYears = await isar.academicYears.where().findAll();
 

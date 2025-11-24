@@ -12,9 +12,10 @@ class AcademicYear {
   String nombre = 'Curso Academico';
   DateTime fechaInicio = DateTime.now();
   DateTime fechaFin = DateTime.now();
-  
+
   @Index()
   bool isCurrentYear = false;
 
   DateTime createdAt = DateTime.now();
+  DateTime updatedAt = DateTime.now();
 }

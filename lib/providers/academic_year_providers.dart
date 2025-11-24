@@ -11,7 +11,12 @@ final allAcademicYearsProvider = StreamProvider<List<AcademicYear>>((ref) {
   return repository.watchAll();
 });
 
-final currentAcademicYearProvider = FutureProvider<AcademicYear?>((ref) async {
-  final repository = ref.watch(academicYearRepositoryProvider);
-  return await repository.getCurrentYear();
+final currentAcademicYearProvider = StreamProvider<AcademicYear?>((ref) {
+  return ref.watch(allAcademicYearsProvider.stream).map((years) {
+    try {
+      return years.firstWhere((y) => y.isCurrentYear);
+    } catch (_) {
+      return null;
+    }
+  });
 });
