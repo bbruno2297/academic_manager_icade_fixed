@@ -5,19 +5,28 @@ import '../models/subject.dart';
 import '../providers/subject_providers.dart';
 
 class StatsScreen extends ConsumerWidget {
-  const StatsScreen({super.key});
+  final bool isEmbedded;
+  const StatsScreen({super.key, this.isEmbedded = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final allSubjectsAsync = ref.watch(allSubjectsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Estadísticas'),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
-      ),
-      body: allSubjectsAsync.when(
+    return isEmbedded
+        ? _buildBody(context, allSubjectsAsync)
+        : Scaffold(
+            appBar: AppBar(
+              title: const Text('Estadísticas'),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Colors.white,
+            ),
+            body: _buildBody(context, allSubjectsAsync),
+          );
+  }
+
+  Widget _buildBody(
+      BuildContext context, AsyncValue<List<Subject>> allSubjectsAsync) {
+    return allSubjectsAsync.when(
         data: (subjects) {
           if (subjects.isEmpty) {
             return const Center(
