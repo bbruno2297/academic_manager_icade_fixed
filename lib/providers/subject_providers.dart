@@ -1,16 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/subject.dart';
-import '../models/academic_year.dart';
 import '../repositories/subject_repository.dart';
-import '../repositories/academic_year_repository.dart';
+import '../providers/academic_year_providers.dart';
 import '../services/calculation_service.dart';
 
 final subjectRepositoryProvider = Provider<SubjectRepository>((ref) {
   return SubjectRepository();
-});
-
-final academicYearRepositoryProvider = Provider<AcademicYearRepository>((ref) {
-  return AcademicYearRepository();
 });
 
 final allSubjectsProvider = StreamProvider<List<Subject>>((ref) {
@@ -18,20 +13,12 @@ final allSubjectsProvider = StreamProvider<List<Subject>>((ref) {
   return repository.watchAll();
 });
 
-final currentAcademicYearProvider = FutureProvider<AcademicYear?>((ref) async {
-  final repository = ref.watch(academicYearRepositoryProvider);
-  return await repository.getCurrentYear();
-});
-
 final currentYearSubjectsProvider = StreamProvider<List<Subject>>((ref) async* {
-  final currentYearAsync = ref.watch(currentAcademicYearProvider);
+  final repository = ref.watch(subjectRepositoryProvider);
+  final currentYear = await ref.watch(currentAcademicYearProvider.future);
 
-  await for (final _ in Stream.periodic(const Duration(milliseconds: 100))) {
-    if (currentYearAsync.hasValue && currentYearAsync.value != null) {
-      final repository = ref.watch(subjectRepositoryProvider);
-      yield* repository.watchByAcademicYear(currentYearAsync.value!.id);
-      break;
-    }
+  if (currentYear != null) {
+    yield* repository.watchByAcademicYear(currentYear.id);
   }
 });
 

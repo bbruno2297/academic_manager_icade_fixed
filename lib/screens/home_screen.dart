@@ -4,6 +4,7 @@ import '../providers/subject_providers.dart';
 import '../widgets/marcador_widget.dart';
 import '../widgets/agenda_widget.dart';
 import '../widgets/gestion_notas_widget.dart';
+import 'add_subject_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -33,8 +34,11 @@ class HomeScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Anadir asignatura - Proximamente')),
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddSubjectScreen(),
+            ),
           );
         },
         child: const Icon(Icons.add),

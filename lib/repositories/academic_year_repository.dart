@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import '../models/academic_year.dart';
+import '../models/subject.dart';
 import '../services/isar_service.dart';
 
 class AcademicYearRepository {
@@ -61,8 +62,23 @@ class AcademicYearRepository {
 
   Future<void> delete(int yearId) async {
     final isar = await _getIsar();
+
+    // Check if year has associated subjects
+    final subjects = await isar.subjects.where().findAll();
+    final hasSubjects = subjects.any((s) => s.academicYearId == yearId);
+
+    if (hasSubjects) {
+      throw Exception(
+          'No se puede eliminar un año académico con asignaturas asociadas');
+    }
+
     await isar.writeTxn(() async {
       await isar.academicYears.delete(yearId);
     });
+  }
+
+  Stream<List<AcademicYear>> watchAll() async* {
+    final isar = await _getIsar();
+    yield* isar.academicYears.where().watch(fireImmediately: true);
   }
 }
