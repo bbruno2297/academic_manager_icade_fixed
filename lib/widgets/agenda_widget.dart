@@ -109,18 +109,11 @@ class AgendaWidget extends ConsumerWidget {
           ),
           const SizedBox(height: 12),
           Center(
-            child: TextButton.icon(
+            child: TextButton(
               onPressed: () {
-                // TODO: Navigate to calendar screen in Phase 2
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content:
-                        Text('Calendario completo - Disponible en Phase 2'),
-                  ),
-                );
+                Navigator.pushNamed(context, '/calendar');
               },
-              icon: const Icon(Icons.calendar_month),
-              label: const Text('Ver calendario completo'),
+              child: const Text('Ver todo'),
             ),
           ),
         ],

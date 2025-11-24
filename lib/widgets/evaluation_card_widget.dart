@@ -7,11 +7,13 @@ import '../screens/evaluation_detail_screen.dart';
 class EvaluationCardWidget extends StatelessWidget {
   final Evaluation evaluation;
   final Subject subject;
+  final VoidCallback? onTap;
 
   const EvaluationCardWidget({
     super.key,
     required this.evaluation,
     required this.subject,
+    this.onTap,
   });
 
   Color _getTipoColor() {
@@ -63,17 +65,18 @@ class EvaluationCardWidget extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EvaluationDetailScreen(
-                evaluation: evaluation,
-                subject: subject,
-              ),
-            ),
-          );
-        },
+        onTap: onTap ??
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EvaluationDetailScreen(
+                    evaluation: evaluation,
+                    subject: subject,
+                  ),
+                ),
+              );
+            },
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16),

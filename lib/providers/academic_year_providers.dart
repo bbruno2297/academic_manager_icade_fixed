@@ -12,7 +12,8 @@ final allAcademicYearsProvider = StreamProvider<List<AcademicYear>>((ref) {
 });
 
 final currentAcademicYearProvider = StreamProvider<AcademicYear?>((ref) {
-  return ref.watch(allAcademicYearsProvider.stream).map((years) {
+  final repository = ref.watch(academicYearRepositoryProvider);
+  return repository.watchAll().map((years) {
     try {
       return years.firstWhere((y) => y.isCurrentYear);
     } catch (_) {

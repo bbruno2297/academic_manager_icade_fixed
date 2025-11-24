@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'services/isar_service.dart';
 import 'screens/home_screen.dart';
 import 'screens/subjects_management_screen.dart';
@@ -10,12 +11,13 @@ import 'screens/add_evaluation_screen.dart';
 import 'screens/evaluation_detail_screen.dart';
 import 'screens/academic_years_screen.dart';
 import 'screens/add_academic_year_screen.dart';
+import 'screens/calendar_screen.dart';
 import 'models/subject.dart';
 import 'models/evaluation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await initializeDateFormatting('es', null); // Added line for date formatting
   await IsarService.getInstance();
 
   // Descomentar para poblar con datos de ejemplo
@@ -67,6 +69,7 @@ class AcademicManagerApp extends StatelessWidget {
         '/add-subject': (context) => const AddSubjectScreen(),
         '/academic-years': (context) => const AcademicYearsScreen(),
         '/add-academic-year': (context) => const AddAcademicYearScreen(),
+        '/calendar': (context) => const CalendarScreen(),
       },
       onGenerateRoute: (settings) {
         // Handle routes that need arguments

@@ -24,6 +24,11 @@ class SubjectRepository {
     return all.where((s) => s.carrera == carrera).toList();
   }
 
+  Future<Subject?> getById(int id) async {
+    final isar = await _getIsar();
+    return await isar.subjects.get(id);
+  }
+
   Future<int> create(Subject subject) async {
     final isar = await _getIsar();
     return await isar.writeTxn(() async {
@@ -65,7 +70,8 @@ class SubjectRepository {
 
   Stream<List<Subject>> watchByAcademicYear(int academicYearId) async* {
     final isar = await _getIsar();
-    await for (final all in isar.subjects.where().watch(fireImmediately: true)) {
+    await for (final all
+        in isar.subjects.where().watch(fireImmediately: true)) {
       yield all.where((s) => s.academicYearId == academicYearId).toList();
     }
   }

@@ -64,3 +64,8 @@ final subjectsBySemestreProvider =
         subjects.where((s) => s.semestre == Semestre.segundo).toList(),
   };
 });
+
+final subjectProvider = FutureProvider.family<Subject?, int>((ref, id) async {
+  final repository = ref.watch(subjectRepositoryProvider);
+  return await repository.getById(id);
+});
