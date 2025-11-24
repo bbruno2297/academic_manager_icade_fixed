@@ -1,0 +1,37 @@
+name: academic_manager_icade
+description: Gestor academico para Doble Grado Derecho y ADE en ICADE
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # Base de datos local (Offline-First)
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.1.1
+  
+  # Gestion de estado reactivo
+  flutter_riverpod: ^2.4.9
+  
+  # Utilidades
+  intl: ^0.19.0
+  
+  # UI
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  
+  # Generadores de codigo para Isar
+  isar_generator: ^3.1.0+1
+  build_runner: ^2.4.7
+
+flutter:
+  uses-material-design: true
