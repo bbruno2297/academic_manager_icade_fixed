@@ -20,7 +20,7 @@ class DashboardLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? const Color(0xFF121212) : const Color(0xFFF5F7FA);
+    final bgColor = isDark ? const Color(0xFF121212) : const Color(0xFFFAFAFA);
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -36,29 +36,41 @@ class DashboardLayout extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                // Header
+                // Header - MÁS COMPACTO
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-                  color: bgColor,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20, vertical: 12), // Reduced
+                  decoration: BoxDecoration(
+                    color: bgColor,
+                    border: Border(
+                      bottom: BorderSide(
+                        color: isDark
+                            ? const Color(0xFF404040)
+                            : const Color(0xFFE0E0E0),
+                        width: 1,
+                      ),
+                    ),
+                  ),
                   child: Row(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            'Hola, Juan 👋', // TODO: Get real user name
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
                           Text(
                             title,
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 16, // Reduced from 24
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).colorScheme.onSurface,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            'Hola, Juan 👋',
+                            style: TextStyle(
+                              fontSize: 12, // Reduced from 14
                               color: Theme.of(context)
                                   .colorScheme
                                   .onSurfaceVariant,
@@ -68,11 +80,25 @@ class DashboardLayout extends StatelessWidget {
                       ),
                       const Spacer(),
                       if (actions != null) ...actions!,
-                      const SizedBox(width: 16),
-                      CircleAvatar(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        child: const Text('J',
-                            style: TextStyle(color: Colors.white)),
+                      const SizedBox(width: 12),
+                      Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius:
+                              BorderRadius.circular(4), // Less rounded
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'J',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -81,7 +107,7 @@ class DashboardLayout extends StatelessWidget {
                 // Content Body
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    padding: const EdgeInsets.all(16), // Reduced from 32
                     child: child,
                   ),
                 ),

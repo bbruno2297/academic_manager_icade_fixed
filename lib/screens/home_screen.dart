@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/gestion_notas_widget.dart';
 import '../widgets/dashboard/dashboard_layout.dart';
-import '../widgets/dashboard/stats_overview_widget.dart';
+import '../widgets/desktop/desktop_dashboard_view.dart';
 import 'subjects_management_screen.dart';
 import 'calendar_screen.dart';
 import 'stats_screen.dart';
@@ -86,7 +86,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _getContentForIndex(int index) {
     switch (index) {
       case 0:
-        return const DashboardView(isDesktop: true);
+        return const DesktopDashboardView(); // NUEVO dashboard desktop
       case 1:
         return const SubjectsManagementScreen(isEmbedded: true);
       case 2:
@@ -104,9 +104,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 }
 
 class DashboardView extends StatelessWidget {
-  final bool isDesktop;
-
-  const DashboardView({super.key, this.isDesktop = false});
+  const DashboardView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -115,15 +113,6 @@ class DashboardView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (isDesktop) ...[
-            const StatsOverviewWidget(),
-            const SizedBox(height: 32),
-            const Text(
-              'Asignaturas Recientes',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-          ],
           const GestionNotasWidget(),
         ],
       ),
